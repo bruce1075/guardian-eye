@@ -1,1 +1,7 @@
 project_id = "ryrvxxobgocqyosbrwoz"
+
+[functions.suggest-bns]
+verify_jwt = false
+
+[functions.sentinel-chat]
+verify_jwt = false
