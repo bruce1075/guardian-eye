@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Report from "./pages/Report.tsx";
 import Sentinel from "./pages/Sentinel.tsx";
 import Admin from "./pages/Admin.tsx";
+import Nexus from "./pages/Nexus.tsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
 
 const queryClient = new QueryClient();
