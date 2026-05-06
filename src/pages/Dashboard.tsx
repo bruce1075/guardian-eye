@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Activity, AlertTriangle, MapPin, FilePlus2, Sparkles, Filter } from "lucide-react";
+import { Activity, AlertTriangle, MapPin, FilePlus2, Sparkles, Filter, ShieldAlert, X } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { AppHeader } from "@/components/AppHeader";
 import { ThreatMap } from "@/components/ThreatMap";
+import { SignalTicker } from "@/components/SignalTicker";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Database } from "@/integrations/supabase/types";
 import { toast } from "sonner";
+import { useGeoAlerts } from "@/hooks/useGeoAlerts";
 
 type Incident = Database["public"]["Tables"]["incidents"]["Row"];
 
@@ -25,6 +27,7 @@ const Dashboard = () => {
   const [category, setCategory] = useState<string>("all");
   const [severity, setSeverity] = useState<string>("all");
   const [window, setWindow] = useState<string>("30");
+  const { coords, nearby, dismiss, radiusKm } = useGeoAlerts();
 
   const load = async () => {
     setLoading(true);
@@ -118,8 +121,42 @@ const Dashboard = () => {
           <StatCard icon={Sparkles} label="AI status" value="ONLINE" tone="safe" mono />
         </div>
 
-        {/* Map */}
-        <ThreatMap incidents={incidents} height="55vh" />
+        {/* Proximity alert banner */}
+        {nearby.length > 0 && (
+          <div className="panel border-alert/60 bg-alert/5 p-3 space-y-2 animate-fade-in">
+            <div className="flex items-center gap-2 text-alert">
+              <ShieldAlert className="h-4 w-4 animate-pulse" />
+              <span className="font-mono text-[10px] uppercase tracking-widest">
+                // proximity.alert · {radiusKm}km radius
+              </span>
+            </div>
+            {nearby.map((i) => (
+              <div key={i.id} className="flex items-center justify-between gap-3 text-sm">
+                <div className="flex-1 min-w-0">
+                  <span className="font-bold text-alert">⚠ {i.title}</span>
+                  <span className="ml-2 font-mono text-[11px] text-muted-foreground">
+                    {i.severity.toUpperCase()} · {i.category.replace("_", " ")} · {i.area || i.city || ""}
+                  </span>
+                </div>
+                <button
+                  onClick={() => dismiss(i.id)}
+                  className="text-muted-foreground hover:text-foreground"
+                  aria-label="Dismiss"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Map + Ticker */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-4">
+          <ThreatMap incidents={incidents} height="62vh" />
+          <div className="h-[62vh]">
+            <SignalTicker incidents={incidents} />
+          </div>
+        </div>
 
         {/* Recent feed */}
         <div className="panel">
