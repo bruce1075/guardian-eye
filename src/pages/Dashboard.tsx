@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Activity, AlertTriangle, MapPin, FilePlus2, Sparkles, Filter } from "lucide-react";
+import { Activity, AlertTriangle, MapPin, FilePlus2, Sparkles, Filter, ShieldAlert, X } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { AppHeader } from "@/components/AppHeader";
 import { ThreatMap } from "@/components/ThreatMap";
+import { SignalTicker } from "@/components/SignalTicker";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Database } from "@/integrations/supabase/types";
 import { toast } from "sonner";
+import { useGeoAlerts } from "@/hooks/useGeoAlerts";
 
 type Incident = Database["public"]["Tables"]["incidents"]["Row"];
 
