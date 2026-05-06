@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.sentinel-chat]
 verify_jwt = false
+
+[functions.case-summary]
+verify_jwt = false
