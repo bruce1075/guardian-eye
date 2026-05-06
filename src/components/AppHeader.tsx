@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Shield, Map, FilePlus2, Sparkles, LogOut, ShieldCheck } from "lucide-react";
+import { Shield, Map, FilePlus2, Sparkles, LogOut, ShieldCheck, Network } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
