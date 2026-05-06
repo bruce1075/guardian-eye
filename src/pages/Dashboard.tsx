@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [category, setCategory] = useState<string>("all");
   const [severity, setSeverity] = useState<string>("all");
   const [window, setWindow] = useState<string>("30");
+  const { coords, nearby, dismiss, radiusKm } = useGeoAlerts();
 
   const load = async () => {
     setLoading(true);
