@@ -8,6 +8,7 @@ const nav = [
   { to: "/dashboard", label: "Threat Map", icon: Map },
   { to: "/report", label: "Report Incident", icon: FilePlus2 },
   { to: "/sentinel", label: "Sentinel AI", icon: Sparkles },
+  { to: "/nexus", label: "Case Nexus", icon: Network },
 ];
 
 export const AppHeader = () => {
