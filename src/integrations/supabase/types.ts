@@ -49,6 +49,72 @@ export type Database = {
           },
         ]
       }
+      case_links: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          label: string
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          label?: string
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          label?: string
+          source_id?: string
+          source_type?: string
+          target_id?: string
+          target_type?: string
+        }
+        Relationships: []
+      }
+      cases: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          priority: number
+          status: Database["public"]["Enums"]["case_status"]
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          priority?: number
+          status?: Database["public"]["Enums"]["case_status"]
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          priority?: number
+          status?: Database["public"]["Enums"]["case_status"]
+          summary?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       incidents: {
         Row: {
           area: string | null
@@ -103,6 +169,42 @@ export type Database = {
         }
         Relationships: []
       }
+      persons: {
+        Row: {
+          alias: string | null
+          created_at: string
+          created_by: string
+          full_name: string
+          id: string
+          notes: string | null
+          phone: string | null
+          role: Database["public"]["Enums"]["person_role"]
+          updated_at: string
+        }
+        Insert: {
+          alias?: string | null
+          created_at?: string
+          created_by: string
+          full_name: string
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          role?: Database["public"]["Enums"]["person_role"]
+          updated_at?: string
+        }
+        Update: {
+          alias?: string | null
+          created_at?: string
+          created_by?: string
+          full_name?: string
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          role?: Database["public"]["Enums"]["person_role"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           city: string | null
@@ -151,6 +253,42 @@ export type Database = {
         }
         Relationships: []
       }
+      vehicles: {
+        Row: {
+          color: string | null
+          created_at: string
+          created_by: string
+          id: string
+          make: string | null
+          model: string | null
+          notes: string | null
+          plate: string
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          created_by: string
+          id?: string
+          make?: string | null
+          model?: string | null
+          notes?: string | null
+          plate: string
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          make?: string | null
+          model?: string | null
+          notes?: string | null
+          plate?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -163,9 +301,11 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_investigator_or_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "investigator" | "citizen"
+      case_status: "open" | "active" | "cold" | "closed"
       incident_category:
         | "theft"
         | "robbery"
@@ -180,6 +320,13 @@ export type Database = {
         | "suspicious_activity"
         | "other"
       incident_severity: "low" | "medium" | "high" | "critical"
+      person_role:
+        | "suspect"
+        | "victim"
+        | "witness"
+        | "officer"
+        | "associate"
+        | "unknown"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -308,6 +455,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "investigator", "citizen"],
+      case_status: ["open", "active", "cold", "closed"],
       incident_category: [
         "theft",
         "robbery",
@@ -323,6 +471,14 @@ export const Constants = {
         "other",
       ],
       incident_severity: ["low", "medium", "high", "critical"],
+      person_role: [
+        "suspect",
+        "victim",
+        "witness",
+        "officer",
+        "associate",
+        "unknown",
+      ],
     },
   },
 } as const

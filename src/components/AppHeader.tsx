@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Shield, Map, FilePlus2, Sparkles, LogOut, ShieldCheck } from "lucide-react";
+import { Shield, Map, FilePlus2, Sparkles, LogOut, ShieldCheck, Network } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,6 +8,7 @@ const nav = [
   { to: "/dashboard", label: "Threat Map", icon: Map },
   { to: "/report", label: "Report Incident", icon: FilePlus2 },
   { to: "/sentinel", label: "Sentinel AI", icon: Sparkles },
+  { to: "/nexus", label: "Case Nexus", icon: Network },
 ];
 
 export const AppHeader = () => {
